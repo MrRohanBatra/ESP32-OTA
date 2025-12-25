@@ -8,6 +8,7 @@ static TaskHandle_t bootTaskHandle = nullptr;
 
 static bool otaActive  = false;
 static bool otaStarted = false;
+static String ssid = "";
 
 /* ================= CALLBACKS ================= */
 static OtaStartCallback     cbStart    = nullptr;
@@ -57,11 +58,13 @@ static void connectStaOrAp() {
 
   if (WiFi.status() == WL_CONNECTED) {
     startOta();
+    ssid = config.staSsid;
     return;
   }
 
   WiFi.mode(WIFI_AP);
   WiFi.softAP(config.apSsid, config.apPass);
+  ssid = config.apSsid;
   startOta();
 }
 
@@ -149,4 +152,7 @@ void SmartButtonOTA::onOtaMode(OtaModeCallback cb) {
 }
 bool SmartButtonOTA::isOtaModeActive() {
   return otaActive;
+}
+String SmartButtonOTA::getOtaSsid() {
+  return ssid;
 }

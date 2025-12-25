@@ -33,4 +33,5 @@ public:
   static void onError(OtaErrorCallback cb);
   static void onOtaMode(OtaModeCallback cb);
   static bool isOtaModeActive();
+  static String getOtaSsid();
 };
